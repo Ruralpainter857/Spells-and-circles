@@ -1,3 +1,4 @@
+# WARNING; Even thought the mod itself is under MIT license, all the assets remains on ARR And needs an authorisation by myself to use them! -> Contact: ruralpainter857
 MIT License
 
 Copyright (c) 2023 NeoForged project
