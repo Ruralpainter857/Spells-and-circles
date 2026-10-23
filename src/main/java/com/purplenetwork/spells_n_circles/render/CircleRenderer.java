@@ -1,20 +1,17 @@
-package com.purplenetwork.spells_n_circles;
+package com.purplenetwork.spells_n_circles.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class CircleRenderer {
 
-    public static void render(SchoolType type, int radius,
-                              PoseStack poseStack, MultiBufferSource bufferSource, CallbackInfo ci) {
-        ci.cancel();
+    public static void render(ResourceLocation texture, int radius,
+                              PoseStack poseStack, MultiBufferSource bufferSource) {
         poseStack.pushPose();
 
         try {
@@ -25,7 +22,6 @@ public class CircleRenderer {
             poseStack.mulPose(new org.joml.Quaternionf().rotationY(rotationAngle));
 
             Matrix4f matrix = poseStack.last().pose();
-            ResourceLocation texture = Helper.getCircleTexture(type);
             RenderType renderType = RenderType.entityTranslucentEmissive(texture, true);
             VertexConsumer consumer = bufferSource.getBuffer(renderType);
             

@@ -49,8 +49,6 @@ public class SpellsNCircles {
         @SubscribeEvent
         static void onClientLoaded(FMLLoadCompleteEvent event){
             LOADED_SCHOOL_TYPES = Helper.getLoadedSchoolTypes(); // We're doing it here so we don't call this method at each casted spell
-            System.out.println("_________________________________________\n\n\n\n");
-            System.out.println("Loaded spells schools; " + LOADED_SCHOOL_TYPES.toString());
         }
     }
 }

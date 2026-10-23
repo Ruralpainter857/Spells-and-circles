@@ -1,7 +1,5 @@
 package com.purplenetwork.spells_n_circles;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 // Demonstrates how to use Neo's config APIs

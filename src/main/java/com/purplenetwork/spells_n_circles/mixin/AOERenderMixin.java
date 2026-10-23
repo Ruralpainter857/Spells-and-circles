@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,6 +33,8 @@ public class AOERenderMixin {
         poseStack.pushPose();
 
         try {
+            float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
+
             poseStack.mulPose(new org.joml.Quaternionf().rotationY(0));
             poseStack.translate(0, 0.3, 0);
 
@@ -42,6 +45,7 @@ public class AOERenderMixin {
             ResourceLocation texture = Helper.getCircleTexture(Helper.getSchoolFromEntity(entity));
             if (entity.getColor().equals(Utils.deconstructRGB(16239960))) texture =
                     ResourceLocation.fromNamespaceAndPath(SpellsNCircles.MODID, "textures/magic_circle/fortify_ring.png");
+
             //TODO; De-hardcode this and find a solution for every generic case like this
             RenderType renderType = RenderType.entityTranslucentEmissive(texture, true);
             VertexConsumer consumer = bufferSource.getBuffer(renderType);

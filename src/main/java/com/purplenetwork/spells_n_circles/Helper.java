@@ -2,8 +2,6 @@ package com.purplenetwork.spells_n_circles;
 
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
-import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.entity.spells.HealingAoe;
 import io.redspace.ironsspellbooks.entity.spells.target_area.TargetedAreaEntity;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;
@@ -14,7 +12,7 @@ import java.util.List;
 
 public class Helper {
     private static final ResourceLocation FALLBACK_CIRCLE_TEXTURE = ResourceLocation.fromNamespaceAndPath(
-            SpellsNCircles.MODID, "textures/magic_circle/evocation_ring.png");
+            SpellsNCircles.MODID, "textures/magic_circle/holy_ring.png"); // Don't change the fallback texture pls
 
     public static ResourceLocation getCircleTexture(@Nullable SchoolType type) {
         if (type == null) {
@@ -31,6 +29,17 @@ public class Helper {
         }
         return schoolTypes.stream()
                 .filter(type -> sameColor(type.getTargetingColor(), entity.getColor()))
+                .findFirst()
+                .orElse(null);
+    }
+    @Nullable
+    public static SchoolType getSchoolFromColor(Vector3f color) {
+        List<SchoolType> schoolTypes = SpellsNCircles.LOADED_SCHOOL_TYPES;
+        if (schoolTypes == null || schoolTypes.isEmpty()) {
+            schoolTypes = getLoadedSchoolTypes();
+        }
+        return schoolTypes.stream()
+                .filter(type -> sameColor(type.getTargetingColor(), color))
                 .findFirst()
                 .orElse(null);
     }
