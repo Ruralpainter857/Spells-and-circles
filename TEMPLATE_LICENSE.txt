@@ -1,3 +1,3 @@
 
-# WARNING; Even thought the code itself is under CC-BY-NC 4.0 license, all the assets remains on ARR And needs an authorisation by myself to use them! -> Contact: ruralpainter857
-> The .jar is under CC-BY-NC 4.0 license.
+WARNING; Even thought the code itself is under CC-BY-NC 4.0 license, all the assets remains on ARR And needs an authorisation by myself to use them! -> Contact: ruralpainter857
+The .jar is under CC-BY-NC 4.0 license.
