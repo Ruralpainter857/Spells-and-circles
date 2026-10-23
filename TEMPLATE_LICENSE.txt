@@ -1,4 +1,4 @@
-# WARNING; Even thought the mod itself is under MIT license, all the assets remains on ARR And needs an authorisation by myself to use them! -> Contact: ruralpainter857
+
 MIT License
 
 Copyright (c) 2023 NeoForged project
@@ -23,3 +23,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+# WARNING; Even thought the code itself is under MIT license, all the assets remains on ARR And needs an authorisation by myself to use them! -> Contact: ruralpainter857
+> The .jar is under CC-BY-NC 4.0 license.
