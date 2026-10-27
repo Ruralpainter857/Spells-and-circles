@@ -3,10 +3,10 @@
   "package": "com.purplenetwork.spells_n_circles.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "OnCastStartedPacketMixin"
+    "client.OnCastStartedPacketMixin"
   ],
   "client": [
-    "AOERenderMixin"
+    "client.AOERenderMixin"
   ],
   "server": [],
   "injectors": {

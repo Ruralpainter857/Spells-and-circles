@@ -1,10 +1,11 @@
-package com.purplenetwork.spells_n_circles.render;
+package com.purplenetwork.spells_n_circles.client.render;
 
 import com.purplenetwork.spells_n_circles.Helper;
 import com.purplenetwork.spells_n_circles.SpellsNCircles;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -38,9 +39,16 @@ public class RenderManager {
 
             poseStack.pushPose();
             poseStack.translate(pos.x, pos.y, pos.z);
-            CircleRenderer.render(magicCircle.getTexture(), magicCircle.getRadius(), poseStack,
-                    Minecraft.getInstance().renderBuffers().bufferSource());
-            poseStack.popPose();
+            if (SpellsNCircles.hideCastedSchool) {
+                CircleRenderer.render(ResourceLocation.fromNamespaceAndPath(SpellsNCircles.MODID,
+                                "textures/magic_circle/evocation_ring.png"), magicCircle.getRadius(), poseStack,
+                        Minecraft.getInstance().renderBuffers().bufferSource()); //I'm just hardcoding ring texture if i want to hide casted spell school hehe
+                poseStack.popPose();
+            } else {
+                CircleRenderer.render(magicCircle.getTexture(), magicCircle.getRadius(), poseStack,
+                        Minecraft.getInstance().renderBuffers().bufferSource());
+                poseStack.popPose();
+            }
         });
     }
     public static void removeCircle(MagicCircle circle){

@@ -1,10 +1,13 @@
-package com.purplenetwork.spells_n_circles.mixin;
+package com.purplenetwork.spells_n_circles.mixin.client;
 
-import com.purplenetwork.spells_n_circles.render.RenderManager;
+import com.purplenetwork.spells_n_circles.SpellsNCircles;
+import com.purplenetwork.spells_n_circles.client.render.RenderManager;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.network.casting.OnCastStartedPacket;
+import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -17,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 @Mixin(OnCastStartedPacket.class)
@@ -37,12 +39,20 @@ public abstract class OnCastStartedPacketMixin {
 
     @Inject(method = "handle", at = @At("TAIL"))
     private static void handle(OnCastStartedPacket packet, IPayloadContext context, CallbackInfo ci) {
+        if (SpellsNCircles.disableMod) return; // Don't shows magic circles if disabled
+
+
         UUID castingEntityUUID = ((OnCastStartedPacketMixin) (Object) packet).castingEntityId;
         assert Minecraft.getInstance().level != null;
         Optional<Entity> castingEntity = StreamSupport.stream(Minecraft.getInstance().level.entitiesForRendering().spliterator(), false)
                 .filter(entity -> entity.getUUID().equals(castingEntityUUID)).findFirst();
+
+        if (castingEntity.get() instanceof LivingEntity livingEntity && SpellsNCircles.restrictRendering &&
+                (livingEntity.hasEffect(MobEffectRegistry.TRUE_INVISIBILITY) ||
+                        livingEntity.hasEffect(MobEffects.INVISIBILITY))) return; // return if config restricts rendering and player has invisibility effect
+
         int spellLevel = ((OnCastStartedPacketMixin) (Object) packet).spellLevel;
-        String spellId = ((OnCastStartedPacketMixin) (Object) packet).spellId; // dw it doesn't produce any error
+        String spellId = ((OnCastStartedPacketMixin) (Object) packet).spellId; // dw it doesn't produce any error, it's strange btw
         AbstractSpell spell = SpellRegistry.getSpell(spellId);
         if (!(castingEntity.get() instanceof LivingEntity castingLivingEntity)) return;
         RenderManager.buildAndAddCircle(spell.getCastTime(spellLevel) + 35,

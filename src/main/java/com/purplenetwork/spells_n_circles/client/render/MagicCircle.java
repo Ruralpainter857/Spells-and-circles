@@ -1,4 +1,4 @@
-package com.purplenetwork.spells_n_circles.render;
+package com.purplenetwork.spells_n_circles.client.render;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
