@@ -1,8 +1,10 @@
 package com.purplenetwork.spells_n_circles;
 
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -36,11 +38,8 @@ public class SpellsNCircles {
         modEventBus.addListener(this::commonSetup);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-        disableMod = Config.DISABLE_MOD.get();
-        restrictRendering = Config.RESTRICT_CIRCLE_RENDERING.get();
-        hideCastedSchool = Config.HIDE_CASTED_SPELL_SCHOOL.get();
-        circleMinSize = Config.CIRCLE_MIN_SIZE.get();
-        circleMaxSize = Config.CIRCLE_MAX_SIZE.get();
+        //NeoForge.EVENT_BUS.register(this);
+        //We don't need this
 
     }
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -58,6 +57,10 @@ public class SpellsNCircles {
         }
         @SubscribeEvent
         public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+            resetClientConfig();
+        }
+        @SubscribeEvent
+        public static void onConfigLoading(ModConfigEvent.Loading event) {
             resetClientConfig();
         }
     }
