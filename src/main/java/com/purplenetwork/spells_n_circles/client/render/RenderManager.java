@@ -42,11 +42,12 @@ public class RenderManager {
             if (SpellsNCircles.hideCastedSchool) {
                 CircleRenderer.render(ResourceLocation.fromNamespaceAndPath(SpellsNCircles.MODID,
                                 "textures/magic_circle/evocation_ring.png"), magicCircle.getRadius(), poseStack,
-                        Minecraft.getInstance().renderBuffers().bufferSource()); //I'm just hardcoding ring texture if i want to hide casted spell school hehe
+                        Minecraft.getInstance().renderBuffers().bufferSource(), magicCircle.getLifetimeTicks());
+                //I'm just hardcoding ring texture if i want to hide casted spell school hehe
                 poseStack.popPose();
             } else {
                 CircleRenderer.render(magicCircle.getTexture(), magicCircle.getRadius(), poseStack,
-                        Minecraft.getInstance().renderBuffers().bufferSource());
+                        Minecraft.getInstance().renderBuffers().bufferSource(), magicCircle.getLifetimeTicks());
                 poseStack.popPose();
             }
         });

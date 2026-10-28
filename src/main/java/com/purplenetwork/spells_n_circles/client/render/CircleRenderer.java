@@ -12,7 +12,7 @@ import org.joml.Matrix4f;
 public class CircleRenderer {
 
     public static void render(ResourceLocation texture, int radius,
-                              PoseStack poseStack, MultiBufferSource bufferSource) {
+                              PoseStack poseStack, MultiBufferSource bufferSource, int lifetime) {
         poseStack.pushPose();
         radius = Math.max(Math.min(radius, SpellsNCircles.circleMaxSize), SpellsNCircles.circleMinSize);
         // limiting circle radius
@@ -27,11 +27,17 @@ public class CircleRenderer {
             RenderType renderType = RenderType.entityTranslucentEmissive(texture, true);
             VertexConsumer consumer = bufferSource.getBuffer(renderType);
 
+            int alpha = lifetime > 10 ? 255 : 255 - 255 / Math.max(1, lifetime);
 
-            consumer.addVertex(matrix, -radius, 0f,  radius).setColor(255, 255, 255, 255).setUv(0f, 1f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
-            consumer.addVertex(matrix,  radius, 0f,  radius).setColor(255, 255, 255, 255).setUv(1f, 1f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
-            consumer.addVertex(matrix,  radius, 0f, -radius).setColor(255, 255, 255, 255).setUv(1f, 0f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
-            consumer.addVertex(matrix, -radius, 0f, -radius).setColor(255, 255, 255, 255).setUv(0f, 0f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
+
+            consumer.addVertex(matrix, -radius, 0f,  radius).setColor(255, 255, 255, alpha)
+                    .setUv(0f, 1f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
+            consumer.addVertex(matrix,  radius, 0f,  radius).setColor(255, 255, 255, alpha)
+                    .setUv(1f, 1f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
+            consumer.addVertex(matrix,  radius, 0f, -radius).setColor(255,255, 255, alpha)
+                    .setUv(1f, 0f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
+            consumer.addVertex(matrix, -radius, 0f, -radius).setColor(255, 255, 255, alpha)
+                    .setUv(0f, 0f).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(240, 240).setNormal(0, 1, 0);
 
             if (bufferSource instanceof MultiBufferSource.BufferSource bs) {
                 bs.endBatch(renderType);
